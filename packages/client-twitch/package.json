@@ -1,0 +1,13 @@
+{
+  "name": "@elizaos/client-twitch",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@elizaos/core": "workspace:*",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.0.0"
+  }
+} 

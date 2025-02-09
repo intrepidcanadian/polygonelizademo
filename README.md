@@ -1,5 +1,7 @@
 # Eliza 🤖
 
+pnpm install --no-frozen-lockfile
+
 <div align="center">
   <img src="./docs/static/img/eliza_banner.jpg" alt="Eliza Banner" width="100%" />
 </div>
