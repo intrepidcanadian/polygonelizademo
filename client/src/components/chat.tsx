@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
     ChatBubble,
@@ -206,7 +207,12 @@ export default function Page({ agentId }: { agentId: UUID }) {
                                         >
                                             {message?.user !== "user" ? (
                                                 <AIWriter>
-                                                    {message?.text}
+                                                    {message?.text.split('\n').map((line, i) => (
+                                                        <React.Fragment key={i}>
+                                                            {line}
+                                                            {i !== message.text.split('\n').length - 1 && <br />}
+                                                        </React.Fragment>
+                                                    ))}
                                                 </AIWriter>
                                             ) : (
                                                 message?.text

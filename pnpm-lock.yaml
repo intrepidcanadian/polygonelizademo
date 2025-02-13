@@ -178,9 +178,6 @@ importers:
       '@elizaos/client-telegram-account':
         specifier: workspace:*
         version: link:../packages/client-telegram-account
-      '@elizaos/client-twitch':
-        specifier: workspace:*
-        version: link:../packages/client-twitch
       '@elizaos/client-twitter':
         specifier: workspace:*
         version: link:../packages/client-twitter
@@ -364,9 +361,6 @@ importers:
       '@elizaos/plugin-imgflip':
         specifier: workspace:*
         version: link:../packages/plugin-imgflip
-      '@elizaos/plugin-initia':
-        specifier: workspace:*
-        version: link:../packages/plugin-initia
       '@elizaos/plugin-injective':
         specifier: workspace:*
         version: link:../packages/plugin-injective
@@ -1294,22 +1288,6 @@ importers:
       vitest:
         specifier: 1.6.1
         version: 1.6.1(@types/node@22.13.1)(jsdom@25.0.1(bufferutil@4.0.9)(canvas@2.11.2(encoding@0.1.13))(utf-8-validate@6.0.5))(terser@5.38.1)
-
-  packages/client-twitch:
-    dependencies:
-      '@elizaos/core':
-        specifier: workspace:*
-        version: link:../core
-      ws:
-        specifier: ^8.18.0
-        version: 8.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.5)
-    devDependencies:
-      '@types/ws':
-        specifier: ^8.5.10
-        version: 8.5.14
-      typescript:
-        specifier: ^5.0.0
-        version: 5.7.3
 
   packages/client-twitter:
     dependencies:
@@ -2329,9 +2307,18 @@ importers:
       '@elizaos/core':
         specifier: workspace:*
         version: link:../core
+      '@elizaos/plugin-tee':
+        specifier: workspace:*
+        version: link:../plugin-tee
+      node-cache:
+        specifier: ^5.1.2
+        version: 5.1.2
       tsup:
         specifier: 8.3.5
         version: 8.3.5(@swc/core@1.10.14(@swc/helpers@0.5.15))(jiti@2.4.2)(postcss@8.5.1)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.7.0)
+      viem:
+        specifier: 2.21.58
+        version: 2.21.58(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@6.0.5)(zod@3.24.1)
       whatwg-url:
         specifier: 7.1.0
         version: 7.1.0
@@ -3243,25 +3230,6 @@ importers:
       whatwg-url:
         specifier: 7.1.0
         version: 7.1.0
-
-  packages/plugin-initia:
-    dependencies:
-      '@elizaos/core':
-        specifier: workspace:*
-        version: link:../core
-      '@elizaos/plugin-tee':
-        specifier: workspace:*
-        version: link:../plugin-tee
-      '@elizaos/plugin-trustdb':
-        specifier: workspace:*
-        version: link:../plugin-trustdb
-      '@initia/initia.js':
-        specifier: 0.2.26
-        version: 0.2.26(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@6.0.5)
-    devDependencies:
-      '@types/node':
-        specifier: ^22.10.1
-        version: 22.13.1
 
   packages/plugin-injective:
     dependencies:
@@ -8972,16 +8940,6 @@ packages:
     peerDependencies:
       google-protobuf: ^3.14.0
 
-  '@initia/initia.js@0.2.26':
-    resolution: {integrity: sha512-qlChzqPi7I45kxs+ef/8JSP9r7i/nZS0Mx7H3zkBKiXGbg4lgsADyirxT1hsP0JVvpmu0Q+CD8kwx44yRZgFkA==}
-    engines: {node: '>=20'}
-
-  '@initia/initia.proto@0.2.6':
-    resolution: {integrity: sha512-khiCPUxZTkyAl+SQbQCOlcJId/a0ToUhG+ChrVXN9a+1ypPz5355j2UP2IvnUf+lAix/+zzdekcqO/Lig7htAQ==}
-
-  '@initia/opinit.proto@0.0.11':
-    resolution: {integrity: sha512-Op9GIlXiV1xhUIjVQ2TFE9a3X8iyFVNtJNHCM34gwLQHJktDNm2KCoW4eHh6pkn4//ECRVH7zuKgV8TdZWogCw==}
-
   '@injectivelabs/abacus-proto-ts@1.13.3':
     resolution: {integrity: sha512-GUxYtBRcskg8LkX2g0oK+D9zlbahq2QTBzmLAQoG5zCeXsjoWxkSkmO1Ez146gODL9ytofnwZsCr2hCE7wgH0w==}
 
@@ -9376,12 +9334,6 @@ packages:
 
   '@ledgerhq/hw-transport-webhid@6.27.1':
     resolution: {integrity: sha512-u74rBYlibpbyGblSn74fRs2pMM19gEAkYhfVibq0RE1GNFjxDMFC1n7Sb+93Jqmz8flyfB4UFJsxs8/l1tm2Kw==}
-
-  '@ledgerhq/hw-transport-webhid@6.30.0':
-    resolution: {integrity: sha512-HoTzjmYwO7+TVwK+GNbglRepUoDywBL6vjhKnhGqJSUPqAqJJyEXcnKnFDBMN7Phqm55O+YHDYfpcHGBNg5XlQ==}
-
-  '@ledgerhq/hw-transport-webusb@6.29.4':
-    resolution: {integrity: sha512-HoGF1LlBT9HEGBQy2XeCHrFdv/FEOZU0+J+yfKcgAQIAiASr2MLvdzwoJbUS8h6Gn+vc+/BjzBSO3JNn7Loqbg==}
 
   '@ledgerhq/hw-transport@6.27.1':
     resolution: {integrity: sha512-hnE4/Fq1YzQI4PA1W0H8tCkI99R3UWDb3pJeZd6/Xs4Qw/q1uiQO+vNLC6KIPPhK0IajUfuI/P2jk0qWcMsuAQ==}
@@ -15683,10 +15635,6 @@ packages:
   bip32@4.0.0:
     resolution: {integrity: sha512-aOGy88DDlVUhspIXJN+dVEtclhIsfAUppD43V0j40cPTld3pv/0X/MlrZSZ6jowIaQQzFwP8M6rFU2z2mVYjDQ==}
     engines: {node: '>=6.0.0'}
-
-  bip32@5.0.0-rc.0:
-    resolution: {integrity: sha512-5hVFGrdCnF8GB1Lj2eEo4PRE7+jp+3xBLnfNjydivOkMvKmUKeJ9GG8uOy8prmWl3Oh154uzgfudR1FRkNBudA==}
-    engines: {node: '>=18.0.0'}
 
   bip39-light@1.0.7:
     resolution: {integrity: sha512-WDTmLRQUsiioBdTs9BmSEmkJza+8xfJmptsNJjxnoq3EydSa/ZBXT6rm66KoT3PJIRYMnhSKNR7S9YL1l7R40Q==}
@@ -27247,14 +27195,6 @@ packages:
   valibot@0.36.0:
     resolution: {integrity: sha512-CjF1XN4sUce8sBK9TixrDqFM7RwNkuXdJu174/AwmQUB62QbCQADg5lLe8ldBalFgtj1uKj+pKwDJiNo4Mn+eQ==}
 
-  valibot@0.37.0:
-    resolution: {integrity: sha512-FQz52I8RXgFgOHym3XHYSREbNtkgSjF9prvMFH1nBsRyfL6SfCzoT1GuSDTlbsuPubM7/6Kbw0ZMQb8A+V+VsQ==}
-    peerDependencies:
-      typescript: '>=5'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   valibot@0.38.0:
     resolution: {integrity: sha512-RCJa0fetnzp+h+KN9BdgYOgtsMAG9bfoJ9JSjIhFHobKWVWyzM3jjaeNTdpFK9tQtf3q1sguXeERJ/LcmdFE7w==}
     peerDependencies:
@@ -28009,9 +27949,6 @@ packages:
 
   wif@2.0.6:
     resolution: {integrity: sha512-HIanZn1zmduSF+BQhkE+YXIbEiH0xPr1012QbFEGB0xsKqJii0/SqJjyn8dFv6y36kOznMgMB+LGcbZTJ1xACQ==}
-
-  wif@5.0.0:
-    resolution: {integrity: sha512-iFzrC/9ne740qFbNjTZ2FciSRJlHIXoxqk/Y5EnE08QOXu1WjJyCCswwDTYbohAOEnlCtLaAAQBhyaLRFh2hMA==}
 
   wildcard@2.0.1:
     resolution: {integrity: sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==}
@@ -33550,7 +33487,7 @@ snapshots:
       '@anthropic-ai/sdk': 0.30.1(encoding@0.1.13)
       '@fal-ai/client': 1.2.0
       '@types/uuid': 10.0.0
-      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
+      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.24.1))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
       anthropic-vertex-ai: 1.0.2(encoding@0.1.13)(zod@3.23.8)
       fastembed: 1.14.1
       fastestsmallesttextencoderdecoder: 1.0.22
@@ -33603,7 +33540,7 @@ snapshots:
       '@fal-ai/client': 1.2.0
       '@tavily/core': 0.0.2
       '@types/uuid': 10.0.0
-      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
+      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.24.1))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
       anthropic-vertex-ai: 1.0.2(encoding@0.1.13)(zod@3.23.8)
       dotenv: 16.4.5
       fastembed: 1.14.1
@@ -33661,7 +33598,7 @@ snapshots:
       '@fal-ai/client': 1.2.0
       '@tavily/core': 0.0.2
       '@types/uuid': 10.0.0
-      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
+      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.24.1))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
       anthropic-vertex-ai: 1.0.2(encoding@0.1.13)(zod@3.23.8)
       dotenv: 16.4.5
       fastembed: 1.14.1
@@ -33719,7 +33656,7 @@ snapshots:
       '@fal-ai/client': 1.2.0
       '@tavily/core': 0.0.2
       '@types/uuid': 10.0.0
-      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
+      ai: 3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.24.1))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
       anthropic-vertex-ai: 1.0.2(encoding@0.1.13)(zod@3.23.8)
       dotenv: 16.4.5
       fastembed: 1.14.1
@@ -35261,46 +35198,6 @@ snapshots:
       browser-headers: 0.4.1
       google-protobuf: 3.21.4
 
-  '@initia/initia.js@0.2.26(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@6.0.5)':
-    dependencies:
-      '@bitcoinerlab/secp256k1': 1.2.0
-      '@initia/initia.proto': 0.2.6
-      '@initia/opinit.proto': 0.0.11
-      '@ledgerhq/hw-transport': 6.31.4
-      '@ledgerhq/hw-transport-webhid': 6.30.0
-      '@ledgerhq/hw-transport-webusb': 6.29.4
-      '@mysten/bcs': 1.4.0
-      axios: 1.7.9
-      bech32: 2.0.0
-      bignumber.js: 9.1.2
-      bip32: 5.0.0-rc.0(typescript@5.7.3)
-      bip39: 3.1.0
-      jscrypto: 1.0.3
-      keccak256: 1.0.6
-      ripemd160: 2.0.2
-      secp256k1: 5.0.1
-      semver: 7.7.1
-      ws: 8.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.5)
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - typescript
-      - utf-8-validate
-
-  '@initia/initia.proto@0.2.6':
-    dependencies:
-      '@improbable-eng/grpc-web': 0.15.0(google-protobuf@3.21.4)
-      google-protobuf: 3.21.4
-      long: 5.2.4
-      protobufjs: 7.4.0
-
-  '@initia/opinit.proto@0.0.11':
-    dependencies:
-      '@improbable-eng/grpc-web': 0.15.0(google-protobuf@3.21.4)
-      google-protobuf: 3.21.4
-      long: 5.2.4
-      protobufjs: 7.4.0
-
   '@injectivelabs/abacus-proto-ts@1.13.3':
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.4)
@@ -36571,20 +36468,6 @@ snapshots:
   '@ledgerhq/hw-transport-webhid@6.27.1':
     dependencies:
       '@ledgerhq/devices': 6.27.1
-      '@ledgerhq/errors': 6.19.1
-      '@ledgerhq/hw-transport': 6.31.4
-      '@ledgerhq/logs': 6.12.0
-
-  '@ledgerhq/hw-transport-webhid@6.30.0':
-    dependencies:
-      '@ledgerhq/devices': 8.4.4
-      '@ledgerhq/errors': 6.19.1
-      '@ledgerhq/hw-transport': 6.31.4
-      '@ledgerhq/logs': 6.12.0
-
-  '@ledgerhq/hw-transport-webusb@6.29.4':
-    dependencies:
-      '@ledgerhq/devices': 8.4.4
       '@ledgerhq/errors': 6.19.1
       '@ledgerhq/hw-transport': 6.31.4
       '@ledgerhq/logs': 6.12.0
@@ -47560,7 +47443,7 @@ snapshots:
     dependencies:
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/safe-json': 1.0.2
-      cross-fetch: 3.1.8(encoding@0.1.13)
+      cross-fetch: 3.2.0(encoding@0.1.13)
       events: 3.3.0
     transitivePeerDependencies:
       - encoding
@@ -48605,7 +48488,7 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  ai@3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8):
+  ai@3.4.33(openai@4.73.0(encoding@0.1.13)(zod@3.24.1))(react@19.0.0)(sswr@2.1.0(svelte@5.19.9))(svelte@5.19.9)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8):
     dependencies:
       '@ai-sdk/provider': 1.0.6
       '@ai-sdk/provider-utils': 2.1.6(zod@3.23.8)
@@ -49623,16 +49506,6 @@ snapshots:
       '@scure/base': 1.2.4
       typeforce: 1.18.0
       wif: 2.0.6
-
-  bip32@5.0.0-rc.0(typescript@5.7.3):
-    dependencies:
-      '@noble/hashes': 1.7.1
-      '@scure/base': 1.2.4
-      uint8array-tools: 0.0.8
-      valibot: 0.37.0(typescript@5.7.3)
-      wif: 5.0.0
-    transitivePeerDependencies:
-      - typescript
 
   bip39-light@1.0.7:
     dependencies:
@@ -53439,7 +53312,7 @@ snapshots:
 
   extract-zip@2.0.1:
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.0(supports-color@8.1.1)
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
@@ -65407,10 +65280,6 @@ snapshots:
 
   valibot@0.36.0: {}
 
-  valibot@0.37.0(typescript@5.7.3):
-    optionalDependencies:
-      typescript: 5.7.3
-
   valibot@0.38.0(typescript@5.7.3):
     optionalDependencies:
       typescript: 5.7.3
@@ -67170,10 +67039,6 @@ snapshots:
   wif@2.0.6:
     dependencies:
       bs58check: 2.1.2
-
-  wif@5.0.0:
-    dependencies:
-      bs58check: 4.0.0
 
   wildcard@2.0.1: {}
 

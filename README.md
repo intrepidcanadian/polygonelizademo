@@ -2,6 +2,64 @@
 
 pnpm install --no-frozen-lockfile
 
+
+{
+    "DeFi": {
+        "binancePlugin": "Binance chain integration",
+        "avalanchePlugin": "Avalanche chain integration",
+        "evmPlugin": "General EVM chain interactions",
+        "aptosPlugin": "Aptos blockchain integration",
+        "artheraPlugin": "Arthera blockchain integration",
+        "availPlugin": "Avail blockchain integration",
+        "bittensorPlugin": "Bittensor AI network integration",
+        "bnbPlugin": "BNB Chain integration",
+        "cosmosPlugin": "Cosmos ecosystem integration",
+        "fuelPlugin": "Fuel blockchain integration"
+    },
+
+    "NFT/Gaming": {
+        "nftCollectionsPlugin": "NFT collection management",
+        "ThreeDGenerationPlugin": "3D asset generation",
+        "footballPlugin": "Football-related functionality",
+        "imageGenerationPlugin": "Image generation for NFTs"
+    },
+
+    "DeFi Tools": {
+        "birdeyePlugin": "Market data analytics",
+        "coingeckoPlugin": "Price and market data",
+        "coinmarketcapPlugin": "Market cap and pricing data",
+        "deskExchangePlugin": "DEX integration",
+        "squidRouterPlugin": "Cross-chain bridging"
+    }
+}
+
+{
+    "coinbasePlugin": {
+        "advancedTradePlugin": "Advanced trading features",
+        "coinbaseCommercePlugin": "Payment processing",
+        "coinbaseMassPaymentsPlugin": "Bulk payments",
+        "tokenContractPlugin": "Token contract interactions"
+    },
+    "lightningPlugin": "Bitcoin Lightning payments"
+}
+
+{
+    "imageGenerationPlugin": "AI image generation",
+    "ThreeDGenerationPlugin": "3D model generation",
+    "storyPlugin": "AI story generation",
+    "sunoPlugin": "Music generation"
+}
+
+{
+    "lensPlugin": "Lens Protocol integration",
+    "farcasterPlugin": "Farcaster social integration",
+    "gitcoinPassportPlugin": "Identity verification",
+    "litPlugin": "Decentralized access control"
+}
+
+
+
+
 <div align="center">
   <img src="./docs/static/img/eliza_banner.jpg" alt="Eliza Banner" width="100%" />
 </div>
