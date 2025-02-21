@@ -7,12 +7,13 @@ export * as providers from "./providers/index.ts";
 import { walletProvider } from "./providers/wallet";
 import { ginsengSwapProvider } from "./providers/ginswap";
 import { swapAction } from "./actions/swap";
+import { timeProvider } from "./providers/time";
 
 export const bootstrapPlugin2: Plugin = {
     name: "Ginseng Swap Plugin",
     description: "Plugin for swapping USDC/USDT tokens on Ginseng Swap (Uniswap V3 fork) on Conflux eSpace testnet",
     actions: [swapAction],
     evaluators: [],
-    providers: [walletProvider, ginsengSwapProvider],
+    providers: [walletProvider, ginsengSwapProvider, timeProvider],
 };
 export default bootstrapPlugin2;

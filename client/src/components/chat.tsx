@@ -24,6 +24,9 @@ import type { IAttachment } from "@/types";
 import { AudioRecorder } from "./audio-recorder";
 import { Badge } from "./ui/badge";
 import { useAutoScroll } from "./ui/chat/hooks/useAutoScroll";
+import { fileToBase64 } from '../utils/files';
+import { generateId } from '../utils/files';
+import { v4 as uuidv4 } from 'uuid';
 
 type ExtraContentFields = {
     user: string;
@@ -37,9 +40,21 @@ type AnimatedDivProps = AnimatedProps<{ style: React.CSSProperties }> & {
     children?: React.ReactNode;
 };
 
+type FileWithMetadata = {
+    file: File;
+    metadata: {
+        id: string;
+        source: string;
+        text: string;
+        title: string;
+        description: string;
+        url: string;
+    }
+};
+
 export default function Page({ agentId }: { agentId: UUID }) {
     const { toast } = useToast();
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFile, setSelectedFile] = useState<FileWithMetadata | null>(null);
     const [input, setInput] = useState("");
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,39 +89,20 @@ export default function Page({ agentId }: { agentId: UUID }) {
         e.preventDefault();
         if (!input) return;
 
-        const attachments: IAttachment[] | undefined = selectedFile
-            ? [
-                  {
-                      url: URL.createObjectURL(selectedFile),
-                      contentType: selectedFile.type,
-                      title: selectedFile.name,
-                  },
-              ]
-            : undefined;
-
-        const newMessages = [
-            {
-                text: input,
-                user: "user",
-                createdAt: Date.now(),
-                attachments,
-            },
-            {
-                text: input,
-                user: "system",
-                isLoading: true,
-                createdAt: Date.now(),
-            },
-        ];
-
-        queryClient.setQueryData(
-            ["messages", agentId],
-            (old: ContentWithUser[] = []) => [...old, ...newMessages]
-        );
+        const attachments = selectedFile ? [{
+            id: generateId(),
+            source: selectedFile.file.type === 'application/pdf' ? 'pdf' : 'image',
+            text: selectedFile.file.name,
+            title: selectedFile.file.name,
+            description: `Uploaded ${selectedFile.file.type}`,
+            url: URL.createObjectURL(selectedFile.file),
+            contentType: selectedFile.file.type
+        }] : undefined;
 
         sendMessageMutation.mutate({
             message: input,
-            selectedFile: selectedFile ? selectedFile : null,
+            selectedFile: selectedFile?.file || null,
+            attachments
         });
 
         setSelectedFile(null);
@@ -121,14 +117,30 @@ export default function Page({ agentId }: { agentId: UUID }) {
     }, []);
 
     const sendMessageMutation = useMutation({
-        mutationKey: ["send_message", agentId],
         mutationFn: ({
             message,
             selectedFile,
+            attachments
         }: {
             message: string;
             selectedFile?: File | null;
-        }) => apiClient.sendMessage(agentId, message, selectedFile),
+            attachments?: IAttachment[];
+        }) => {
+            queryClient.setQueryData(
+                ["messages", agentId],
+                (old: ContentWithUser[] = []) => [
+                    ...old,
+                    {
+                        text: message,
+                        user: "user",
+                        createdAt: Date.now(),
+                        attachments
+                    }
+                ]
+            );
+            
+            return apiClient.sendMessage(agentId, message, selectedFile, attachments);
+        },
         onSuccess: (newMessages: ContentWithUser[]) => {
             queryClient.setQueryData(
                 ["messages", agentId],
@@ -150,10 +162,46 @@ export default function Page({ agentId }: { agentId: UUID }) {
         },
     });
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file?.type.startsWith("image/")) {
-            setSelectedFile(file);
+        if (!file) return;
+
+        console.log('File selected:', { 
+            type: file.type, 
+            name: file.name, 
+            size: file.size 
+        });
+
+        if (file.type === 'application/pdf') {
+            const base64 = await fileToBase64(file);
+            console.log('PDF processed:', { 
+                hasBase64: !!base64,
+                fileSize: base64?.length 
+            });
+            
+            setSelectedFile({
+                file,
+                metadata: {
+                    id: uuidv4(),
+                    source: 'pdf',
+                    text: base64 || '',
+                    title: file.name,
+                    description: 'Resume PDF',
+                    url: URL.createObjectURL(file)
+                }
+            });
+        } else if (file.type.startsWith('image/')) {
+            setSelectedFile({
+                file,
+                metadata: {
+                    id: uuidv4(),
+                    source: 'image',
+                    text: file.name,
+                    title: file.name,
+                    description: `Image: ${file.name}`,
+                    url: URL.createObjectURL(file)
+                }
+            });
         }
     };
 
@@ -300,13 +348,15 @@ export default function Page({ agentId }: { agentId: UUID }) {
                                 >
                                     <X />
                                 </Button>
-                                <img
-                                    alt="Selected file"
-                                    src={URL.createObjectURL(selectedFile)}
-                                    height="100%"
-                                    width="100%"
-                                    className="aspect-square object-contain w-16"
-                                />
+                                {selectedFile instanceof Blob && (
+                                    <img
+                                        alt="Selected file"
+                                        src={URL.createObjectURL(selectedFile)}
+                                        height="100%"
+                                        width="100%"
+                                        className="aspect-square object-contain w-16"
+                                    />
+                                )}
                             </div>
                         </div>
                     ) : null}
@@ -340,7 +390,7 @@ export default function Page({ agentId }: { agentId: UUID }) {
                                         type="file"
                                         ref={fileInputRef}
                                         onChange={handleFileChange}
-                                        accept="image/*"
+                                        accept="application/pdf,image/*"
                                         className="hidden"
                                     />
                                 </div>

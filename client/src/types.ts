@@ -1,6 +1,10 @@
 // Update the IAttachment interface
 export interface IAttachment {
-    url: string;
-    contentType?: string; // Make contentType optional
+    id: string;
+    source: string;
+    text: string;
     title: string;
+    description: string;
+    url: string;
+    contentType?: string;
 }

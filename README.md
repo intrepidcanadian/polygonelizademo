@@ -2,6 +2,10 @@ Project Proposal Presentation in Google Drive
 
 https://drive.google.com/file/d/1FYVZEzhVKjMudd1D_tCzG4Su4btbr0Em/view?usp=drive_link
 
+Initial Website
+
+https://intrepidai.replit.app/
+
 Other Project Proposal Documents
 
 https://drive.google.com/file/d/1FYVZEzhVKjMudd1D_tCzG4Su4btbr0Em/view?usp=drive_link

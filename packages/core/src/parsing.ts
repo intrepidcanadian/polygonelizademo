@@ -1,12 +1,12 @@
 import type { ActionResponse } from "./types.ts";
-const jsonBlockPattern = /```json\n([\s\S]*?)\n```/;
+const jsonBlockPattern = /```(?:json)?\s*\n([\s\S]*?)\n\s*```/;
 
 export const messageCompletionFooter = `\nResponse format should be formatted in a valid JSON block like this:
 \`\`\`json
 { "user": "{{agentName}}", "text": "<string>", "action": "<string>" }
 \`\`\`
 
-The “action” field should be one of the options in [Available Actions] and the "text" field should be the response you want to send.
+The "action" field should be one of the options in [Available Actions] and the "text" field should be the response you want to send.
 `;
 
 export const shouldRespondFooter = `The available options are [RESPOND], [IGNORE], or [STOP]. Choose the most appropriate option.
@@ -146,12 +146,17 @@ export function parseJSONObjectFromText(
     const jsonBlockMatch = text.match(jsonBlockPattern);
 
     if (jsonBlockMatch) {
-        const parsingText = normalizeJsonString(text);
         try {
-            jsonData = JSON.parse(parsingText);
+            // Clean the text before parsing
+            const cleanedJson = jsonBlockMatch[1]
+                .trim()
+                .replace(/^\s*```json\s*/, '')  // Remove opening ```json
+                .replace(/\s*```\s*$/, '');     // Remove closing ```
+            
+            jsonData = JSON.parse(cleanedJson);
         } catch (e) {
             console.error("Error parsing JSON:", e);
-            console.error("Text is not JSON", text);
+            console.error("Failed parsing text:", jsonBlockMatch[1]);
             return extractAttributes(text);
         }
     } else {

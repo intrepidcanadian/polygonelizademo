@@ -51,12 +51,11 @@ import {
 import { zgPlugin } from "@elizaos/plugin-0g";
 import { footballPlugin } from "@elizaos/plugin-football";
 
-import { bootstrapPlugin2 } from "@elizaos/plugin-bootstrap2";
 import { normalizeCharacter } from "@elizaos/plugin-di";
 import createGoatPlugin from "@elizaos/plugin-goat";
 import createZilliqaPlugin from "@elizaos/plugin-zilliqa";
 
-// import { intifacePlugin } from "@elizaos/plugin-intiface";
+import { intifacePlugin } from "@elizaos/plugin-intiface";
 import { ThreeDGenerationPlugin } from "@elizaos/plugin-3d-generation";
 import { abstractPlugin } from "@elizaos/plugin-abstract";
 import { akashPlugin } from "@elizaos/plugin-akash";
@@ -159,7 +158,8 @@ import { quickIntelPlugin } from "@elizaos/plugin-quick-intel";
 
 import { trikonPlugin } from "@elizaos/plugin-trikon";
 import arbitragePlugin from "@elizaos/plugin-arbitrage";
-import bootstrap2Plugin from "@elizaos/plugin-bootstrap2";
+import {bootstrapPlugin2} from "@elizaos/plugin-bootstrap2";
+import {resumeagentPlugin} from "@elizaos/plugin-resumeagent";
 
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
@@ -796,8 +796,7 @@ export async function initializeClients(
     character: Character,
     runtime: IAgentRuntime
 ) {
-    // each client can only register once
-    // and if we want two we can explicitly support it
+
     const clients: Record<string, any> = {};
     const clientTypes: string[] =
         character.clients?.map((str) => str.toLowerCase()) || [];
@@ -1302,7 +1301,8 @@ export async function createAgent(
             // getSecret(character, "DESK_EXCHANGE_NETWORK")
             //     ? deskExchangePlugin
             //     : null,
-            getSecret(character, "EVM_PRIVATE_KEY") ?  bootstrap2Plugin : null,
+            // getSecret(character, "EVM_PRIVATE_KEY") ?  bootstrapPlugin2 : null,
+            // getSecret(character, "EVM_PRIVATE_KEY") ? resumeagentPlugin : null,
         ]
             .flat()
             .filter(Boolean),

@@ -1,4 +1,5 @@
 import type { UUID, Character } from "@elizaos/core";
+import type { IAttachment } from "@/types";
 
 const BASE_URL = `http://localhost:${import.meta.env.VITE_SERVER_PORT}`;
 
@@ -65,17 +66,34 @@ const fetcher = async ({
 
 export const apiClient = {
     sendMessage: (
-        agentId: string,
+        agentId: UUID,
         message: string,
-        selectedFile?: File | null
+        selectedFile?: File | null,
+        attachments?: IAttachment[]
     ) => {
         const formData = new FormData();
         formData.append("text", message);
         formData.append("user", "user");
 
+        console.log('API sending message:', { 
+            hasFile: !!selectedFile,
+            hasAttachments: !!attachments?.length 
+        });
+
+        if (attachments && attachments.length > 0) {
+            formData.append("attachments", JSON.stringify(attachments));
+            console.log('Attachments data:', attachments);
+        }
+
         if (selectedFile) {
             formData.append("file", selectedFile);
+            console.log('File data:', { 
+                name: selectedFile.name,
+                type: selectedFile.type,
+                size: selectedFile.size 
+            });
         }
+
         return fetcher({
             url: `/${agentId}/message`,
             method: "POST",

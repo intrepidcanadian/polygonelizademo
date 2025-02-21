@@ -108,6 +108,11 @@ Response format should be formatted in a JSON block like this:
 \`\`\`
 `;
 
+// Define the custom request type at the top of the file
+interface CustomRequest extends ExpressRequest {
+    file?: Express.Multer.File;
+}
+
 export class DirectClient {
     public app: express.Application;
     private agents: Map<string, AgentRuntime>; // container management
@@ -140,11 +145,6 @@ export class DirectClient {
 
         const apiLogRouter = createVerifiableLogApiRouter(this.agents);
         this.app.use(apiLogRouter);
-
-        // Define an interface that extends the Express Request interface
-        interface CustomRequest extends ExpressRequest {
-            file?: Express.Multer.File;
-        }
 
         // Update the route handler to use CustomRequest instead of express.Request
         this.app.post(
@@ -192,12 +192,23 @@ export class DirectClient {
         this.app.post(
             "/:agentId/message",
             upload.single("file"),
-            async (req: express.Request, res: express.Response) => {
+            async (req: CustomRequest, res: express.Response) => {
                 const agentId = req.params.agentId;
                 const roomId = stringToUuid(
                     req.body.roomId ?? "default-room-" + agentId
                 );
                 const userId = stringToUuid(req.body.userId ?? "user");
+
+                console.log('Message request:', {
+                    hasFile: !!req.file,
+                    fileDetails: req.file ? {
+                        name: req.file.originalname,
+                        type: req.file.mimetype,
+                        size: req.file.size,
+                        path: req.file.path
+                    } : null,
+                    body: req.body
+                });
 
                 let runtime = this.agents.get(agentId);
 
@@ -234,15 +245,9 @@ export class DirectClient {
 
                 const attachments: Media[] = [];
                 if (req.file) {
-                    const filePath = path.join(
-                        process.cwd(),
-                        "data",
-                        "uploads",
-                        req.file.filename
-                    );
                     attachments.push({
                         id: Date.now().toString(),
-                        url: filePath,
+                        url: req.file.path,
                         title: req.file.originalname,
                         source: "direct",
                         description: `Uploaded file: ${req.file.originalname}`,
