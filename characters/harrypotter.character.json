@@ -1,6 +1,6 @@
 {
     "name": "Harry Potter",
-    "clients": ["direct"],
+    "clients": ["telegram"],
     "modelProvider": "anthropic",
     "settings": {
         "voice": {

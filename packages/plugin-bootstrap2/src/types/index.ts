@@ -13,7 +13,7 @@ import * as viemChains from "viem/chains";
 const _SupportedChainList = Object.keys(viemChains) as Array<
     keyof typeof viemChains
 >;
-export type SupportedChain = "confluxESpaceTestnet" | "polygonAmoy";
+export type SupportedChain = 'confluxESpaceTestnet';
 
 // Transaction types
 export interface Transaction {
@@ -202,4 +202,12 @@ export function isQuoteParams(options: Record<string, unknown>): options is Quot
            typeof options.toToken === 'string' &&
            typeof options.amount === 'string' &&
            [500, 3000, 10000].includes(feeTier as number);
+}
+
+export interface LaunchTokenParams {
+    chain: SupportedChain;
+    name: string;
+    symbol: string;
+    decimals: number;
+    initialSupply: number;
 }

@@ -1,6 +1,6 @@
 {  
     "name": "Intrepid",
-    "clients": [],
+    "clients": ["telegram"],
     "modelProvider": "anthropic",
     "settings": {
         "voice": {
