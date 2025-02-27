@@ -82,7 +82,18 @@ export class SqliteDatabaseAdapter
     }
 
     async init() {
-        this.db.exec(sqliteTables);
+        try {
+            // First, load vector extensions
+            load(this.db);
+            
+            // Then create tables
+            this.db.exec(sqliteTables);
+            
+            elizaLogger.success("Database initialized successfully");
+        } catch (error) {
+            elizaLogger.error("Failed to initialize database:", error);
+            throw error;
+        }
     }
 
     async close() {

@@ -1,6 +1,6 @@
 export const sqliteTables = `
+-- Disable foreign keys during initialization
 PRAGMA foreign_keys=OFF;
-BEGIN TRANSACTION;
 
 -- Table: accounts
 CREATE TABLE IF NOT EXISTS "accounts" (
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS "memories" (
     "type" TEXT NOT NULL,
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "content" TEXT NOT NULL,
-    "embedding" BLOB NOT NULL, -- TODO: EMBEDDING ARRAY, CONVERT TO BEST FORMAT FOR SQLITE-VSS (JSON?)
+    "embedding" BLOB NOT NULL,
     "userId" TEXT,
     "roomId" TEXT,
     "agentId" TEXT,
@@ -28,6 +28,28 @@ CREATE TABLE IF NOT EXISTS "memories" (
     FOREIGN KEY ("roomId") REFERENCES "rooms"("id"),
     FOREIGN KEY ("agentId") REFERENCES "accounts"("id")
 );
+
+-- Table: yields
+CREATE TABLE IF NOT EXISTS "yields" (
+    "id" TEXT PRIMARY KEY,
+    "type" TEXT DEFAULT 'SUPPLY_RATE' NOT NULL,
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "content" TEXT NOT NULL CHECK(json_valid("content")),
+    "embedding" BLOB,
+    "userId" TEXT,
+    "roomId" TEXT,
+    "agentId" TEXT,
+    "protocol" TEXT DEFAULT 'AAVE_V3' NOT NULL,
+    "chain" TEXT DEFAULT 'POLYGON' NOT NULL,
+    "unique" INTEGER DEFAULT 1 NOT NULL,
+    FOREIGN KEY ("userId") REFERENCES "accounts"("id"),
+    FOREIGN KEY ("roomId") REFERENCES "rooms"("id"),
+    FOREIGN KEY ("agentId") REFERENCES "accounts"("id")
+);
+
+-- Create index for yields
+CREATE INDEX IF NOT EXISTS "yields_timestamp_key" ON "yields" ("createdAt");
+CREATE INDEX IF NOT EXISTS "yields_protocol_chain_key" ON "yields" ("protocol", "chain");
 
 -- Table: goals
 CREATE TABLE IF NOT EXISTS "goals" (
@@ -127,4 +149,5 @@ CREATE INDEX IF NOT EXISTS "knowledge_content_key" ON "knowledge"
 CREATE INDEX IF NOT EXISTS "knowledge_created_key" ON "knowledge" ("agentId", "createdAt");
 CREATE INDEX IF NOT EXISTS "knowledge_shared_key" ON "knowledge" ("isShared");
 
-COMMIT;`;
+-- Re-enable foreign keys after initialization
+PRAGMA foreign_keys=ON;`;
